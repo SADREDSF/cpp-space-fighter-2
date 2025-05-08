@@ -7,7 +7,7 @@ void PlayerShip::LoadContent(ResourceManager& resourceManager)
 	ConfineToScreen();
 	SetResponsiveness(0.1);
 
-	m_pTexture = resourceManager.Load<Texture>("Textures\\PlayerShip.png");
+	m_pTexture = resourceManager.Load<Texture>("Textures\\F35_Idle.png");
 
 	AudioSample* pAudio = resourceManager.Load<AudioSample>("Audio\\Effects\\Laser.wav");
 	pAudio->SetVolume(0.5f);
@@ -28,10 +28,10 @@ void PlayerShip::HandleInput(const InputState& input)
 	if (IsActive())
 	{
 		Vector2 direction;
-		if (input.IsKeyDown(Key::DOWN)) direction.Y++;
-		if (input.IsKeyDown(Key::UP)) direction.Y--;
-		if (input.IsKeyDown(Key::Right)) direction.X++;
-		if (input.IsKeyDown(Key::Left)) direction.X--;
+		if (input.IsKeyDown(Key::DOWN) || input.IsKeyDown(Key::S)) direction.Y++;
+		if (input.IsKeyDown(Key::UP) || input.IsKeyDown(Key::W)) direction.Y--;
+		if (input.IsKeyDown(Key::Right) || input.IsKeyDown(Key::D)) direction.X++;
+		if (input.IsKeyDown(Key::Left) || input.IsKeyDown(Key::A)) direction.X--;
 
 		// Normalize the direction
 		if (direction.X != 0 && direction.Y != 0)

@@ -45,7 +45,7 @@ void Level01::LoadContent(ResourceManager& resourceManager)
 	}
 
 	// Setup background
-	SetBackground(resourceManager.Load<Texture>("Textures\\SpaceBackground01.png"));
+	SetBackground(resourceManager.Load<Texture>("Textures\\waterPixelated.jpg"));
 
 	Level::LoadContent(resourceManager);
 }
