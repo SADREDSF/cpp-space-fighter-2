@@ -2,6 +2,15 @@
 
 #include "Level01.h"
 #include "BioEnemyShip.h"
+#include "Game.h"
+
+Level01::Level01()
+{
+	m_backgroundScrollY = 0.0f;
+	m_backgroundScrollSpeed = 200.0f;
+}
+
+Level01::~Level01(){}
 
 
 void Level01::LoadContent(ResourceManager& resourceManager)
@@ -45,8 +54,43 @@ void Level01::LoadContent(ResourceManager& resourceManager)
 	}
 
 	// Setup background
+	m_pBackgroundTexture = resourceManager.Load<Texture>("Textures\\waterPixelated.jpg");
+
+	
+	//COMMENT OUT FOR SCROLLING SHADER [BUGGED]
 	SetBackground(resourceManager.Load<Texture>("Textures\\waterPixelated.jpg"));
 
+	
+
 	Level::LoadContent(resourceManager);
+	m_backgroundScrollY = 0.0f;
 }
+
+void Level01::Update(const GameTime& gameTime)
+{
+	float bgHeight = m_pBackgroundTexture->GetSize().Y;
+
+	m_backgroundScrollY += m_backgroundScrollSpeed * gameTime.GetElapsedTime();
+	if (m_backgroundScrollY >= -bgHeight)
+	{
+		m_backgroundScrollY -= bgHeight;
+	}
+
+	Level::Update(gameTime);
+}
+
+
+void Level01::Draw(KatanaEngine::SpriteBatch& spriteBatch)
+{
+	float bgHeight = m_pBackgroundTexture->GetSize().Y;
+
+	// Draw first background at scrolled position
+	spriteBatch.Draw(m_pBackgroundTexture, Vector2(0, m_backgroundScrollY));
+
+	// Draw second background just *below* it
+	spriteBatch.Draw(m_pBackgroundTexture, Vector2(0, m_backgroundScrollY + bgHeight));
+
+	Level::Draw(spriteBatch);
+}
+
 
